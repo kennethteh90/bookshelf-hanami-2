@@ -7,13 +7,13 @@ gem 'hanami-controller', '~> 2.0'
 gem 'hanami-router', '~> 2.0'
 gem 'hanami-validations', '~> 2.0'
 
+gem 'dry-monads'
 gem 'dry-types', '~> 1.0', '>= 1.6.1'
 gem 'pg'
 gem 'puma'
 gem 'rake'
 gem 'rom'
 gem 'rom-sql'
-gem 'simple-interactors'
 
 group :development, :test do
   gem 'debug', '>= 1.0.0'

@@ -18,7 +18,8 @@ module Bookshelf
           halt 404 unless result.success?
 
           if request.accept == 'application/json'
-            response.status = 204
+            response.status = 200
+            response.body = { message: "Book #{result.value!} deleted" }.to_json
           else
             response.redirect_to(Hanami.app['routes'].path(:books))
           end

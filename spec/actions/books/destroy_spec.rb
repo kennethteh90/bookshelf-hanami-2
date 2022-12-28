@@ -12,7 +12,7 @@ RSpec.describe Bookshelf::Actions::Books::Destroy do
     let(:params) { { id: 1, 'HTTP_ACCEPT' => 'application/json' } }
 
     it 'works' do
-      expect(delete_book).to receive(:call).with(1).and_return(Hanami::Interactor::Result.new)
+      expect(delete_book).to receive(:call).with(1).and_return(double(success?: true, value!: 1))
       response = action.call(params)
       expect(response).to be_successful
     end
@@ -22,7 +22,7 @@ RSpec.describe Bookshelf::Actions::Books::Destroy do
     let(:params) { { id: 1, 'HTTP_ACCEPT' => 'application/html' } }
 
     it 'works' do
-      expect(delete_book).to receive(:call).with(1).and_return(Hanami::Interactor::Result.new)
+      expect(delete_book).to receive(:call).with(1).and_return(double(success?: true, value!: 1))
 
       status, headers, _body = action.call(params)
 

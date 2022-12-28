@@ -10,6 +10,7 @@ RSpec.describe Bookshelf::Operations::Books::Delete do
     it 'deletes a book' do
       expect {
         expect(subject).to be_success
+        expect(subject.value!).to eq(book_id)
       }.to change { book_repo.all.count }.by(-1)
     end
   end
@@ -17,9 +18,10 @@ RSpec.describe Bookshelf::Operations::Books::Delete do
   context 'when book does not exist' do
     let(:book_id) { 5 }
 
-    it 'deletes a book' do
+    it 'returns failure' do
       expect {
         expect(subject).to be_failure
+        expect(subject.failure).to eq('Book not found')
       }.not_to change { book_repo.all.count }
     end
   end

@@ -1,14 +1,16 @@
-require 'hanami/interactor'
+require 'dry/monads'
 
 module Bookshelf
   module Operations
     module Books
       class Delete
-        include Hanami::Interactor
+        include Dry::Monads[:result]
         include Deps['repositories.books']
 
         def call(book_id)
-          error('Book not found') unless books.delete(book_id).positive?
+          return Failure('Book not found') unless books.delete(book_id).positive?
+
+          Success(book_id)
         end
       end
     end
