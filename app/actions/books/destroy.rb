@@ -20,7 +20,7 @@ module Bookshelf
           if request.accept == 'application/json'
             response.status = 204
           else
-            response.redirect_to(Hanami.app["routes"].path(:books))
+            response.redirect_to(Hanami.app['routes'].path(:books))
           end
         end
       end

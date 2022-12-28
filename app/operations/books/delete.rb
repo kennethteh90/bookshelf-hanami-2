@@ -8,7 +8,7 @@ module Bookshelf
         include Deps['repositories.books']
 
         def call(book_id)
-          error('Book not found') unless books.delete(book_id) > 0
+          error('Book not found') unless books.delete(book_id).positive?
         end
       end
     end

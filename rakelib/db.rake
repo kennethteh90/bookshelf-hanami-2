@@ -22,7 +22,6 @@ end
 
 class DbTaskHelper
   class << self
-
     HOST         = 'PGHOST'.freeze
     PORT         = 'PGPORT'.freeze
     USER         = 'PGUSER'.freeze
@@ -91,8 +90,7 @@ class DbTaskHelper
   end
 end
 
-require 'rom/sql/rake_task'
-require "hanami/prepare"
+require 'hanami/prepare'
 
 namespace :db do
   task :setup do
@@ -101,64 +99,64 @@ namespace :db do
     ROM::SQL::RakeSupport.env = ROM.container(config)
   end
 
-# # Copied from ROM
-# namespace :db do
-#   task :create do
-#     DbTaskHelper.set_environment_variables
+  # # Copied from ROM
+  # namespace :db do
+  #   task :create do
+  #     DbTaskHelper.set_environment_variables
 
-#     begin
-#       DbTaskHelper.call_db_command('createdb')
-#     rescue MigrationError => e
-#       puts e.message
-#     end
-#   end
+  #     begin
+  #       DbTaskHelper.call_db_command('createdb')
+  #     rescue MigrationError => e
+  #       puts e.message
+  #     end
+  #   end
 
-#   task :setup do
-#     configuration = ROM::Configuration.new(:sql, ENV.fetch('DATABASE_URL'))
-#     ROM::SQL::RakeSupport.env = ROM.container(configuration)
-#   end
+  #   task :setup do
+  #     configuration = ROM::Configuration.new(:sql, ENV.fetch('DATABASE_URL'))
+  #     ROM::SQL::RakeSupport.env = ROM.container(configuration)
+  #   end
 
-#   desc 'Create database and run migrations'
-#   task prepare: [:create, :migrate]
+  #   desc 'Create database and run migrations'
+  #   task prepare: [:create, :migrate]
 
-#   desc 'Drop database'
-#   task :drop do
-#     DbTaskHelper.set_environment_variables
+  #   desc 'Drop database'
+  #   task :drop do
+  #     DbTaskHelper.set_environment_variables
 
-#     DbTaskHelper.call_db_command('dropdb')
-#   end
+  #     DbTaskHelper.call_db_command('dropdb')
+  #   end
 
-#   desc 'Rollback migration (options [step])'
-#   task :rollback, [:step] => :environment do |_, args|
-#     Rake::Task['db:setup'].invoke
+  #   desc 'Rollback migration (options [step])'
+  #   task :rollback, [:step] => :environment do |_, args|
+  #     Rake::Task['db:setup'].invoke
 
-#     step = (args[:step] || 1).to_i
+  #     step = (args[:step] || 1).to_i
 
-#     # Reference: https://github.com/jeremyevans/sequel/blob/d9104d2cf0611f749a16fe93c4171a1147dfd4b2/lib/sequel/extensions/migration.rb#L598
-#     if step >= 20000101
-#       ROM::SQL::RakeSupport.run_migrations(target: step)
-#       puts "<= db:rollback version=[#{step}] executed"
-#       exit
-#     end
+  #     # Reference: https://github.com/jeremyevans/sequel/blob/d9104d2cf0611f749a16fe93c4171a1147dfd4b2/lib/sequel/extensions/migration.rb#L598
+  #     if step >= 20000101
+  #       ROM::SQL::RakeSupport.run_migrations(target: step)
+  #       puts "<= db:rollback version=[#{step}] executed"
+  #       exit
+  #     end
 
-#     gateway = ROM::SQL::RakeSupport.env.gateways[:default]
-#     unless gateway.dataset?(:schema_migrations)
-#       puts '<= db:rollback failed due to missing schema_migrations'
-#       exit 0
-#     end
+  #     gateway = ROM::SQL::RakeSupport.env.gateways[:default]
+  #     unless gateway.dataset?(:schema_migrations)
+  #       puts '<= db:rollback failed due to missing schema_migrations'
+  #       exit 0
+  #     end
 
-#     schema_migrations = gateway.dataset(:schema_migrations).all
-#     versions = schema_migrations
-#                .sort_by { |s| s[:filename] }
-#                .reverse
-#                .map { |s| s[:filename].split('_').first }
+  #     schema_migrations = gateway.dataset(:schema_migrations).all
+  #     versions = schema_migrations
+  #                .sort_by { |s| s[:filename] }
+  #                .reverse
+  #                .map { |s| s[:filename].split('_').first }
 
-#     versions.shift(step)
-#     target = versions.first.to_i
-#     ROM::SQL::RakeSupport.run_migrations(target:)
+  #     versions.shift(step)
+  #     target = versions.first.to_i
+  #     ROM::SQL::RakeSupport.run_migrations(target:)
 
-#     puts "<= db:rollback version=[#{target}] executed"
-#   end
+  #     puts "<= db:rollback version=[#{target}] executed"
+  #   end
 
   task seed: :environment do
     book_repo = Bookshelf::Repositories::Books.new

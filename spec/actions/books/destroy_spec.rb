@@ -5,13 +5,13 @@ RSpec.describe Bookshelf::Actions::Books::Destroy do
     described_class.new(delete_book:)
   end
 
-  let(:params) { Hash[id: 1] }
+  let(:params) { { id: 1 } }
   let(:delete_book) { instance_double(Bookshelf::Operations::Books::Delete) }
 
   context 'when json is requested' do
-    let(:params) { Hash[id: 1, 'HTTP_ACCEPT' => 'application/json'] }
+    let(:params) { { id: 1, 'HTTP_ACCEPT' => 'application/json' } }
 
-    it "works" do
+    it 'works' do
       expect(delete_book).to receive(:call).with(1).and_return(Hanami::Interactor::Result.new)
       response = action.call(params)
       expect(response).to be_successful
@@ -19,12 +19,12 @@ RSpec.describe Bookshelf::Actions::Books::Destroy do
   end
 
   context 'when json is not requested' do
-    let(:params) { Hash[id: 1, 'HTTP_ACCEPT' => 'application/html'] }
+    let(:params) { { id: 1, 'HTTP_ACCEPT' => 'application/html' } }
 
-    it "works" do
+    it 'works' do
       expect(delete_book).to receive(:call).with(1).and_return(Hanami::Interactor::Result.new)
 
-      status, headers, body = action.call(params)
+      status, headers, _body = action.call(params)
 
       expect(status).to eq(302)
       expect(headers['Location']).to eq('/books')

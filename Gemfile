@@ -1,38 +1,39 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "hanami", "~> 2.0"
-gem "hanami-router", "~> 2.0"
-gem "hanami-controller", "~> 2.0"
-gem "hanami-validations", "~> 2.0"
+gem 'hanami', '~> 2.0'
+gem 'hanami-controller', '~> 2.0'
+gem 'hanami-router', '~> 2.0'
+gem 'hanami-validations', '~> 2.0'
 
-gem "dry-types", "~> 1.0", ">= 1.6.1"
+gem 'dry-types', '~> 1.0', '>= 1.6.1'
+gem 'pg'
+gem 'puma'
+gem 'rake'
+gem 'rom'
+gem 'rom-sql'
 gem 'simple-interactors'
-gem "puma"
-gem "rake"
-gem "rom"
-gem "rom-sql"
-gem "pg"
 
 group :development, :test do
-  gem "dotenv"
-  gem "faker"
-  gem "debug", ">= 1.0.0"
+  gem 'debug', '>= 1.0.0'
+  gem 'dotenv'
+  gem 'faker'
 end
 
 group :cli, :development do
-  gem "hanami-reloader"
+  gem 'hanami-reloader'
 end
 
 group :cli, :development, :test do
-  gem "hanami-rspec"
+  gem 'hanami-rspec'
 end
 
 group :development do
-  gem "guard-puma", "~> 0.8"
+  gem 'guard-puma', '~> 0.8'
+  gem 'rubocop'
 end
 
 group :test do
-  gem "rack-test"
+  gem 'rack-test'
 end
