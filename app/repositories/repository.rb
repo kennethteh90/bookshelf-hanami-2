@@ -1,3 +1,4 @@
+# auto_register: false
 require 'rom-repository'
 
 module Bookshelf
